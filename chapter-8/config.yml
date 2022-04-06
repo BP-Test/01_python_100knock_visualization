@@ -1,0 +1,4 @@
+dataset:
+  name: pseudo
+  path: data/images_by_py/
+use_gpu: true
