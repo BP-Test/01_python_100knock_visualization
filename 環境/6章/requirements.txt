@@ -1,0 +1,5 @@
+ipython==5.5.0
+librosa==0.8.1
+matplotlib==3.2.2
+numpy==1.19.5
+SoundFile==0.10.3.post1
