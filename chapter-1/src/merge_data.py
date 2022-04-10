@@ -4,23 +4,28 @@ import numpy as np
 import os
 from IPython.core.display import display
 from glob import glob
+from pathlib import Path
 from load_data import get_data
 # Change directory
 os.chdir('../')
 # Enable dynamic loading to a file.
 
 __dir__ = os.getcwd()
-
+path = Path(__dir__)
+list(path.iterdir())
 # Process
-0. load base csv file
-data_base = pd.read_csv(f'{__dir__}/data/22_shizuoka_all_20210331.csv',encoding='shift-jis',header=None)
-data)ba
+# 0. load base csv file
 
-1. Load all the master data using globe
-master_data_list = glob(f'{__dir__}/data/{str("mst*.csv")}',encoding='shift-jis')
-2. merge dataframe
+data_base = get_data(file_name='22_shizuoka_all_20210331.csv', master=False)
 
-3. Turn into iteration
+
+# 1. Load all the master data using globe
+master_data_list = glob(f'{path}/data/{str("mst*.csv")}')
+master_data_1 = get_data(file_name=master_data_list[0], master=True)
+master_data_1_key = master_data_1.columns.tolist()[0]
+# 2. merge dataframe
+merged_data = data_base.merge(master_data_1, how='left', on=master_data_1_key, validate='m:1')
+# 3. Turn into iteration
 for i in master_data_list:
     key_column = i.columns.toliist()[0]
     data = pd.merge(fact_data, i, on=key_column, validate='m:1')
