@@ -15,6 +15,16 @@ __dir__ = os.getcwd()
 
 
 def get_data(file_name, master=False):
+    """Returns a dataframe having columns from master data
+
+    Args:
+        file_name (str): name of the file e.g. 'file.txt'
+        master (bool, optional): _description_. Defaults to False.
+
+    Returns:
+        pd.DataFrame: DataFrame
+
+    """
     if master == True:
         master_data = pd.read_csv(
             filepath_or_buffer=f'{__dir__}/data/{str(file_name)}', delimiter='\t', encoding='shift-jis')
@@ -28,30 +38,16 @@ def get_data(file_name, master=False):
         data.columns = columns
         return data
 
-
-# Try using glob to get all data starting with diff
-diff_files = glob(f'{__dir__}/data/{str("diff*.csv")}')
-diff_files
-
-# Concatenate diff data interractively
-mst = pd.read_csv(
-    filepath_or_buffer=f'{__dir__}/data/{str("mst_column_name.txt")}', delimiter='\t', encoding='shift-jis')
-mst_columns = mst.column_name_en
-data_0 = pd.read_csv(diff_files[0], encoding='shift-jis', header=None)
-data_0.columns = mst_columns
-data_1 = pd.read_csv(diff_files[1], encoding='shift-jis', header=None)
-data_1.columns = mst_columns
-data_concat = pd.concat([data_0, data_1])
-data_concat.head()
-
-# Turn concatenation process into function
-
-
-pd.DataFrame(columns=pd.read_csv(
-    diff_files[0], encoding='shift-jis', header=None).columns.tolist())
-
-
 def get_diff_data(file_name, diff_file=True):
+    """_summary_
+
+    Args:
+        file_name (str): regular expression that specifies a file pattern e.g. 'file_*.txt'
+        diff_file (bool, optional): Optional boolean. Defaults to True.
+
+    Returns:
+        pd.DataFrmae: Concatenated DataFrame with proper column names
+    """
     # get column names from master data
     column_master_data = pd.read_csv(
         filepath_or_buffer=f'{__dir__}/data/{str("mst_column_name.txt")}', delimiter='\t', encoding='shift-jis')
