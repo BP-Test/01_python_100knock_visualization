@@ -4,7 +4,7 @@ import numpy as np
 import os
 from IPython.core.display import display
 from glob import glob
-
+from pathlib import Path
 # Change directory
 os.chdir('../')
 # Enable dynamic loading to a file.
@@ -25,9 +25,13 @@ def get_data(file_name, master=False):
         pd.DataFrame: DataFrame
 
     """
-    if master == True:
+    if master == True and file_name[-3:]=='txt':
         master_data = pd.read_csv(
             filepath_or_buffer=f'{__dir__}/data/{str(file_name)}', delimiter='\t', encoding='shift-jis', dtype='object')
+        return master_data
+    elif master == True:
+        master_data = pd.read_csv(
+            filepath_or_buffer=f'{__dir__}/data/{str(file_name)}', encoding='shift-jis', dtype='object')
         return master_data
     else:
         column_master_data = pd.read_csv(
