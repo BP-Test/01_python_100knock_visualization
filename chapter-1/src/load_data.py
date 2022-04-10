@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+from IPython.core.display import display
 
 # Change directory
 os.chdir('../')
@@ -17,19 +18,19 @@ def get_data(file_name, columns=None, master=False):
         column_master_data = pd.read_csv(filepath_or_buffer=f'{__dir__}/data/{str("mst_column_name.txt")}', delimiter='\t', encoding='shift-jis')
         columns = column_master_data.column_name_en
         data = pd.read_csv(filepath_or_buffer=f'{__dir__}/data/{str(file_name)}', encoding='shift-jis', header=None)
-        #data = pd.read_csv(filepath_or_buffer=__dir__+'\\data\\'+file_name, delimiter='\t', encoding='shift-jis', header=None)
         data.columns = columns
         return data
 
 
 # Testing my code
+if __name__ == '__main__':
+    #pd.read_csv(__dir__+'/data/mst_column_name.txt', delimiter='\t', encoding='shift-jis')
+    #pd.read_csv(filepath_or_buffer=f'{__dir__}/data/mst_column_name.txt', delimiter='\t', encoding='shift-jis')
+    #pd.read_csv(filepath_or_buffer=f'{__dir__}/data/{str("mst_column_name.txt")}', delimiter='\t', encoding='shift-jis')
 
-pd.read_csv(__dir__+'/data/mst_column_name.txt', delimiter='\t', encoding='shift-jis')
-pd.read_csv(filepath_or_buffer=f'{__dir__}/data/mst_column_name.txt', delimiter='\t', encoding='shift-jis')
-pd.read_csv(filepath_or_buffer=f'{__dir__}/data/{str("mst_column_name.txt")}', delimiter='\t', encoding='shift-jis')
-# Read header data
-mst = pd.read_csv('./data/mst_column_name.txt', delimiter='\t', encoding='shift-jis')
-mst.head(3)
-
-# Read all shizuoka data
-data = pd.read_csv('./data/22_shizuoka_all_20210331.csv', header=None, columns=mst.column_name_en.values)
+    # Read header data
+    mst = get_data(file_name='mst_column_name.txt', master=True)
+    # Read all shizuoka data
+    data = get_data(file_name='22_shizuoka_all_20210331.csv', master=False)
+    display(mst.head(3))
+    display(data.head(3))
